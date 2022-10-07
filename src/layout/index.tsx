@@ -9,7 +9,7 @@ export const Layout: FC<LayoutProps> = () => {
 
   return (
     <Box>
-      <Container sx={{ height: "100vh", py: 5 }}>
+      <Container sx={{ height: "100vh", py: 3 }}>
         <Outlet />
       </Container>
     </Box>
