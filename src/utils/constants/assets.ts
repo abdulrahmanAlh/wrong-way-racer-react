@@ -14,4 +14,4 @@ export const GAME_ASSETS = [
   { name: "enemy_right", url: "images/cars/enemy_right.png" },
 ];
 
-export const MAX_MOVMENT = 6;
+export const MAX_MOVMENT = 7;

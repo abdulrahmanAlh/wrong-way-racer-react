@@ -15,6 +15,13 @@ type CarPosition =
 
 let CarStatus: CarPosition = "CENTER";
 
+const enemyTypes: ("CENTER" | "LEFT" | "RIGHT")[] = ["RIGHT", "CENTER", "LEFT"];
+
+let currentEnemy: { sprite: Sprite; type: "CENTER" | "LEFT" | "RIGHT" },
+  centerEnemy: Sprite,
+  leftEnemy: Sprite,
+  rightEnemy: Sprite;
+
 export const LoadAssets = (app: Application) => {
   GAME_ASSETS.forEach(({ name, url }) => {
     Assets.add(name, url);
@@ -40,6 +47,7 @@ export const LoadAssets = (app: Application) => {
     road.height = app.screen.height / 2;
     road.y = app.screen.height - road.height;
     road.zIndex = 3;
+    road.name = "road";
 
     const mountain_fade = new Sprite(textures.mountain_fade);
 
@@ -59,10 +67,23 @@ export const LoadAssets = (app: Application) => {
     car_center.zIndex = 4;
     car_center.name = "car";
 
+    centerEnemy = new Sprite(textures.enemy);
+    centerEnemy.scale.x = 0.08;
+    centerEnemy.scale.y = 0.08;
+    centerEnemy.y = road.height + 10;
+    centerEnemy.x = app.screen.width / 2 - 25;
+    centerEnemy.anchor.set(0.5, 1.1);
+
+    // center the sprites anchor point
+    centerEnemy.zIndex = 4;
+    centerEnemy.name = "enemy";
+
     app.stage.addChild(sky);
     app.stage.addChild(mountain_fade);
     app.stage.addChild(road);
     app.stage.addChild(car_center);
+    // app.stage.addChild(enemy);
+
     // const newSky = app.stage.getChildByName("sky");
     // newSky.scale.x = 2;
     // app.stage.addChild(newSky);
@@ -76,6 +97,29 @@ export const StartAnimations = (app: Application) => {
   let count: number = 0.38;
 
   const car = app.stage.getChildByName("car");
+  const road: Sprite = app.stage.getChildByName("road");
+
+  // const enemy = app.stage.getChildByName("enemy");
+
+  setInterval(() => {
+    centerEnemy.scale.x = 0.08;
+    centerEnemy.scale.y = 0.08;
+    centerEnemy.y = road.height + 10;
+    centerEnemy.x = app.screen.width / 2 - 25;
+    centerEnemy.anchor.set(0.5, 1.1);
+
+    // center the sprites anchor point
+    centerEnemy.zIndex = 4;
+    centerEnemy.name = "enemy";
+
+    currentEnemy = {
+      sprite: centerEnemy,
+      type: enemyTypes[Math.floor(Math.random() * 3)],
+    };
+
+    app.stage.addChild(currentEnemy.sprite);
+  }, 3000);
+
   let up = true;
   app.ticker.add(() => {
     if (count > 0.4) {
@@ -91,9 +135,35 @@ export const StartAnimations = (app: Application) => {
       count -= 0.001;
       car.y -= Math.sin(count);
     }
+    if (currentEnemy) {
+      const { sprite, type } = currentEnemy;
+      switch (type) {
+        case "CENTER":
+          sprite.y += 2;
+          // sprite.x -= 1.8;
+          sprite.scale.x += 0.003;
+          sprite.scale.y += 0.003;
+          break;
+        case "LEFT":
+          sprite.y += 2;
+          sprite.x += 1.8;
+          sprite.scale.x += 0.003;
+          sprite.scale.y += 0.003;
+          break;
+        case "RIGHT":
+          sprite.y += 2;
+          sprite.x -= 1.8;
+          sprite.scale.x += 0.003;
+          sprite.scale.y += 0.003;
+          break;
+        default:
+          break;
+      }
+    }
 
     InputChecker(app);
     CheckStatus(app);
+    CheckEnemy(app);
   });
 };
 
@@ -194,3 +264,5 @@ const ChangeStatus = (dir: "LEFT" | "RIGHT") => {
     }
   }
 };
+
+const CheckEnemy = (app: Application) => {};
