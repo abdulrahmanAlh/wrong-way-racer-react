@@ -10,8 +10,8 @@ export const GameView: FC<GameViewProps> = () => {
 
   useEffect(() => {
     const app = new Application({
-      width: 1200,
-      height: 600,
+      width: window.innerWidth / 1.2,
+      // height: window.innerHeight/,
       backgroundAlpha: 0,
       resolution: window.devicePixelRatio || 1,
     });
