@@ -182,6 +182,7 @@ export const StartAnimations = (app: Application) => {
   }, 3000);
 
   setInterval(() => {
+    //Delete old container
     app.stage.removeChild(containerLeft);
     app.stage.removeChild(containerRight);
     containerLeft.y = app.screen.height / 2;
@@ -189,6 +190,7 @@ export const StartAnimations = (app: Application) => {
 
     containerRight.y = app.screen.height / 2;
     containerRight.x = app.screen.width / 1.3;
+    //Add new container
     app.stage.addChild(containerLeft);
     app.stage.addChild(containerRight);
   }, 10000);
@@ -208,15 +210,15 @@ export const StartAnimations = (app: Application) => {
       count -= 0.001;
       car.y -= Math.sin(count);
     }
+
+    // Move tree container
     containerRight.y += 0.5;
     containerRight.x += 0.5;
-    // containerRight.scale.x += 0.02;
-    // containerRight.scale.y += 0.02;
+
     containerLeft.y += 0.5;
     containerLeft.x -= 0.5;
-    // containerLeft.scale.x += 0.001;
-    // containerLeft.scale.y += 0.001;
 
+    // Move enemy based on its type
     if (currentEnemy) {
       const { sprite, type } = currentEnemy;
       switch (type) {
@@ -241,6 +243,7 @@ export const StartAnimations = (app: Application) => {
         default:
           break;
       }
+      // If there is collision
       if (testForAABB(sprite, car) && firstTime) {
         app.stage.removeChild(sprite);
         app.stage.addChild(explosion);
@@ -250,8 +253,9 @@ export const StartAnimations = (app: Application) => {
         }, 1000);
       }
     }
-
+    //Check inputs
     InputChecker(app);
+    // Check car position
     CheckStatus(app);
   });
 };

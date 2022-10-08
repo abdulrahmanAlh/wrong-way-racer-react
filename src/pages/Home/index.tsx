@@ -12,13 +12,13 @@ function HomePage() {
         <GameView />
       </Box>
       <Grid container spacing={2}>
-        <Grid item md={4}>
+        <Grid item md={4} xs={12}>
           <RankingList />
         </Grid>
-        <Grid item md={4}>
+        <Grid item md={4} xs={12}>
           <Chat />
         </Grid>
-        <Grid item md={4}>
+        <Grid item md={4} xs={12}>
           <Players />
         </Grid>
       </Grid>
