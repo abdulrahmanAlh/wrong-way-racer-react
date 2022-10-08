@@ -9,4 +9,9 @@ export const GAME_ASSETS = [
   { name: "car", url: "images/cars/car_center.png" },
   { name: "car_left", url: "images/cars/car_left.png" },
   { name: "car_right", url: "images/cars/car_right.png" },
+  { name: "enemy", url: "images/cars/enemy_center.png" },
+  { name: "enemy_left", url: "images/cars/enemy_left.png" },
+  { name: "enemy_right", url: "images/cars/enemy_right.png" },
 ];
+
+export const MAX_MOVMENT = 6;

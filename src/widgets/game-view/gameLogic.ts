@@ -2,7 +2,7 @@ import { Assets } from "@pixi/assets";
 import { Application, Sprite, Container, Texture, Loader } from "pixi.js";
 import Keyboard from "pixi.js-keyboard";
 
-import { GAME_ASSETS } from "utils/constants/assets";
+import { GAME_ASSETS, MAX_MOVMENT } from "utils/constants/assets";
 
 type CarPosition =
   | "CENTER"
@@ -101,11 +101,9 @@ export const InputChecker = (app: Application) => {
   const car: Sprite = app.stage.getChildByName("car");
   Keyboard.update();
   if (Keyboard.isKeyDown("ArrowLeft", "KeyA")) {
-    car.x -= 10;
     ChangeStatus("LEFT");
   }
   if (Keyboard.isKeyDown("ArrowRight", "KeyD")) {
-    car.x += 10;
     ChangeStatus("RIGHT");
   }
 };
@@ -118,48 +116,48 @@ const CheckStatus = (app: Application) => {
   switch (CarStatus) {
     case "CENTER_TO_LEFT":
       if (MovmentCounter === 0) {
-        car.texture = Assets.get("car_left") as Texture;
+        car.texture = Assets.get("car_right") as Texture;
       }
       MovmentCounter += 0.1;
-      if (MovmentCounter >= 5) {
+      if (MovmentCounter >= MAX_MOVMENT) {
         MovmentCounter = 0;
-        car.texture = Assets.get("car") as Texture;
+        // car.texture = Assets.get("car") as Texture;
         CarStatus = "LEFT";
       }
       car.x -= MovmentCounter;
       break;
     case "CENTER_TO_RIGHT":
       if (MovmentCounter === 0) {
-        car.texture = Assets.get("car_right") as Texture;
+        car.texture = Assets.get("car_left") as Texture;
       }
       MovmentCounter += 0.1;
-      if (MovmentCounter >= 5) {
+      if (MovmentCounter >= MAX_MOVMENT) {
         MovmentCounter = 0;
-        car.texture = Assets.get("car") as Texture;
+        // car.texture = Assets.get("car") as Texture;
         CarStatus = "RIGHT";
       }
       car.x += MovmentCounter;
       break;
     case "RIGHT_TO_CENTER":
       if (MovmentCounter === 0) {
-        car.texture = Assets.get("car_left") as Texture;
+        car.texture = Assets.get("car") as Texture;
       }
       MovmentCounter += 0.1;
-      if (MovmentCounter >= 5) {
+      if (MovmentCounter >= MAX_MOVMENT) {
         MovmentCounter = 0;
-        car.texture = Assets.get("car") as Texture;
+        // car.texture = Assets.get("car") as Texture;
         CarStatus = "CENTER";
       }
       car.x -= MovmentCounter;
       break;
     case "LEFT_TO_CENTER":
       if (MovmentCounter === 0) {
-        car.texture = Assets.get("car_right") as Texture;
+        car.texture = Assets.get("car") as Texture;
       }
       MovmentCounter += 0.1;
-      if (MovmentCounter >= 5) {
+      if (MovmentCounter >= MAX_MOVMENT) {
         MovmentCounter = 0;
-        car.texture = Assets.get("car") as Texture;
+        // car.texture = Assets.get("car") as Texture;
         CarStatus = "CENTER";
       }
       car.x += MovmentCounter;
@@ -167,11 +165,12 @@ const CheckStatus = (app: Application) => {
     default:
       break;
   }
-  console.log(CarStatus);
 };
 
 const ChangeStatus = (dir: "LEFT" | "RIGHT") => {
   if (dir === "LEFT") {
+    console.log(CarStatus);
+
     switch (CarStatus) {
       case "CENTER":
         CarStatus = "CENTER_TO_LEFT";
