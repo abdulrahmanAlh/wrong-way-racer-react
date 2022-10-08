@@ -36,7 +36,7 @@ export const Players: FC<PlayersProps> = () => {
           </Typography>
         </Stack>
       </Box>
-      <Stack spacing={1.5} sx={{ p: 1 }}>
+      <Stack spacing={1} sx={{ p: 1 }}>
         <Button variant="contained" startIcon={<SettingsIcon />}>
           Setting
         </Button>
