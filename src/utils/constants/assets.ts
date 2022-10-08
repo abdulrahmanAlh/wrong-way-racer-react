@@ -12,6 +12,30 @@ export const GAME_ASSETS = [
   { name: "enemy", url: "images/cars/enemy_center.png" },
   { name: "enemy_left", url: "images/cars/enemy_left.png" },
   { name: "enemy_right", url: "images/cars/enemy_right.png" },
+  {
+    name: "explosion_spritesheet",
+    url: "images/animation/explosion_spritesheet.png",
+  },
+  {
+    name: "explosion_spritesheet1",
+    url: "images/animation/explosion_spritesheet1.png",
+  },
+  {
+    name: "explosion_spritesheet2",
+    url: "images/animation/explosion_spritesheet2.png",
+  },
+  {
+    name: "explosion_spritesheet3",
+    url: "images/animation/explosion_spritesheet3.png",
+  },
+  {
+    name: "explosion_spritesheet4",
+    url: "images/animation/explosion_spritesheet4.png",
+  },
+  {
+    name: "explosion_spritesheet5",
+    url: "images/animation/explosion_spritesheet5.png",
+  },
 ];
 
-export const MAX_MOVMENT = 7;
+export const MAX_MOVMENT = 9;
