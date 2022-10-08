@@ -68,6 +68,41 @@ export const LoadAssets = (app: Application) => {
     mountain_fade.width = app.screen.width;
     mountain_fade.zIndex = 2;
 
+    const mountain_left = new Sprite(textures.mountain_left);
+    mountain_left.scale.x = 0.1;
+    mountain_left.scale.y = 0.1;
+
+    const mountain_right = new Sprite(textures.mountain_right);
+    mountain_right.scale.x = 0.2;
+    mountain_right.scale.y = 0.2;
+
+    const sideroad_left = new Sprite(textures.sideroad_left);
+    sideroad_left.scale.x = 0.1;
+    sideroad_left.scale.y = 0.1;
+
+    const sideroad_right = new Sprite(textures.sideroad_right);
+    sideroad_right.scale.x = 0.2;
+    sideroad_right.scale.y = 0.2;
+
+    const containerLeft = new Container();
+    containerLeft.y = app.screen.height / 2;
+    containerLeft.x = app.screen.width / 6;
+
+    containerLeft.name = "containerLeft";
+    containerLeft.addChild(mountain_left);
+    containerLeft.addChild(sideroad_left);
+
+    const containerRight = new Container();
+    containerRight.addChild(sideroad_right);
+    containerRight.addChild(mountain_right);
+    containerRight.y = app.screen.height / 2;
+    containerRight.x = app.screen.width / 1.3;
+    containerRight.name = "containerRight";
+
+    // move the sprite to the center of the screen
+    mountain_fade.width = app.screen.width;
+    mountain_fade.zIndex = 2;
+
     const car_center = new Sprite(textures.car);
 
     // move the sprite to the center of the screen
@@ -81,15 +116,7 @@ export const LoadAssets = (app: Application) => {
     car_center.name = "car";
 
     currentEnemy = { sprite: new Sprite(textures.enemy), type: "CENTER" };
-    // centerEnemy.scale.x = 0.08;
-    // centerEnemy.scale.y = 0.08;
-    // centerEnemy.y = road.height + 10;
-    // centerEnemy.x = app.screen.width / 2 - 25;
-    // centerEnemy.anchor.set(0.5, 1.1);
 
-    // // center the sprites anchor point
-    // centerEnemy.zIndex = 4;
-    // centerEnemy.name = "enemy";
     explosion = new AnimatedSprite([
       textures.explosion_spritesheet,
       textures.explosion_spritesheet1,
@@ -112,6 +139,8 @@ export const LoadAssets = (app: Application) => {
     app.stage.addChild(mountain_fade);
     app.stage.addChild(road);
     app.stage.addChild(car_center);
+    app.stage.addChild(containerLeft);
+    app.stage.addChild(containerRight);
 
     StartAnimations(app);
   });
@@ -123,6 +152,9 @@ export const StartAnimations = (app: Application) => {
   let firstTime = false;
 
   const car: Sprite = app.stage.getChildByName("car");
+  const containerRight: Container = app.stage.getChildByName("containerRight");
+  const containerLeft: Container = app.stage.getChildByName("containerLeft");
+
   const road: Sprite = app.stage.getChildByName("road");
 
   setInterval(() => {
@@ -149,6 +181,18 @@ export const StartAnimations = (app: Application) => {
     app.stage.addChild(currentEnemy.sprite);
   }, 3000);
 
+  setInterval(() => {
+    app.stage.removeChild(containerLeft);
+    app.stage.removeChild(containerRight);
+    containerLeft.y = app.screen.height / 2;
+    containerLeft.x = app.screen.width / 6;
+
+    containerRight.y = app.screen.height / 2;
+    containerRight.x = app.screen.width / 1.3;
+    app.stage.addChild(containerLeft);
+    app.stage.addChild(containerRight);
+  }, 10000);
+
   let up = true;
   app.ticker.add(() => {
     if (count > 0.4) {
@@ -164,6 +208,15 @@ export const StartAnimations = (app: Application) => {
       count -= 0.001;
       car.y -= Math.sin(count);
     }
+    containerRight.y += 0.5;
+    containerRight.x += 0.5;
+    // containerRight.scale.x += 0.02;
+    // containerRight.scale.y += 0.02;
+    containerLeft.y += 0.5;
+    containerLeft.x -= 0.5;
+    // containerLeft.scale.x += 0.001;
+    // containerLeft.scale.y += 0.001;
+
     if (currentEnemy) {
       const { sprite, type } = currentEnemy;
       switch (type) {
@@ -195,7 +248,6 @@ export const StartAnimations = (app: Application) => {
           app.stage.removeChild(explosion);
           app.stage.addChild(car);
         }, 1000);
-        // car.texture = Assets.get("explosion_spritesheet") as Texture;
       }
     }
 
@@ -273,8 +325,6 @@ const CheckStatus = (app: Application) => {
 
 const ChangeStatus = (dir: "LEFT" | "RIGHT") => {
   if (dir === "LEFT") {
-    console.log(CarStatus);
-
     switch (CarStatus) {
       case "CENTER":
         CarStatus = "CENTER_TO_LEFT";
