@@ -1,17 +1,12 @@
-import mountain_fade from "assets/mountain_fade.png";
-import mountain_left from "assets/mountain_left.png";
-import mountain_right from "assets/mountain_right.png";
-import road from "assets/road.png";
-import sideroad_left from "assets/sideroad_left.png";
-import sideroad_right from "assets/sideroad_right.png";
-import sky from "assets/sky.png";
-
 export const GAME_ASSETS = [
-  { name: "images/mountain_fade.png", url: mountain_fade },
-  { name: "images/mountain_left.png", url: mountain_left },
-  { name: "images/mountain_right.png", url: mountain_right },
-  { name: "images/road.png", url: road },
-  { name: "images/sideroad_left.png", url: sideroad_left },
-  { name: "images/sideroad_right.png", url: sideroad_right },
-  { name: "images/sky.png", url: sky },
+  { name: "mountain_fade", url: "images/mountain_fade.png" },
+  { name: "mountain_left", url: "images/mountain_left.png" },
+  { name: "mountain_right", url: "images/mountain_right.png" },
+  { name: "road", url: "images/road.png" },
+  { name: "sideroad_left", url: "images/sideroad_left.png" },
+  { name: "sideroad_right", url: "images/sideroad_right.png" },
+  { name: "sky", url: "images/sky.png" },
+  { name: "car", url: "images/cars/car_center.png" },
+  { name: "car_left", url: "images/cars/car_left.png" },
+  { name: "car_right", url: "images/cars/car_right.png" },
 ];
